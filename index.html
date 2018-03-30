@@ -3,6 +3,16 @@
   <head>
       <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   </head>
+  <style>
+    *{
+      transform-origin: 50% 50% 0px !important;
+      transform-box: border-box;
+    }
+    #abMoon{
+      transform-origin: 50% 50% 0px !important;
+      transform-box: border-box;
+    }
+  </style>
   <body>
     <div id="container"></div>
     <script src="js/jquery.js"></script>
@@ -24,6 +34,7 @@
         .css('width', '100%')
         .css('height', '100%')
         .css('overflow', 'hidden');
+        $('svg').css({height: '100%', width: '100%'})
         var snap = Snap('#container')
         Snap.load("Moon.svg", (data)=>{
           snap.append(data);
@@ -33,21 +44,21 @@
         function rotateObject( obj, duration, mina){
             var rect = $(obj)[0].getBoundingClientRect();
             center ={
-              x: (rect.x + rect.width/2),
-              y: (rect.y + rect.height/2)
+              x: (rect.left + (rect.width/2)),
+              y: (rect.top + (rect.height/2))
             }
+            console.log(center);
 
-
-          console.log('here');
-          Snap.animate(0, 360, (value)=>{
-            console.log(value);
-            // console.log('cos: '+Math.cos(value));
-            // console.log('sin: '+Math.sin(value));
-            // console.log(center.x);
-            // console.log(center.y);
-            console.log(Snap(obj));
-            Snap(obj).matrix.rotate(value, center.x, center.y);
-            //Snap(obj).attr({transform: `matrix(${Math.cos(value)}, ${-Math.sin(value)}, ${Math.sin(value)}, ${Math.cos(value)}, ${center.x}, ${center.y})`})
+          $(obj).css({
+            '-webkit-transform-origin-x': `50%`,
+            '-webkit-transform-origin-y': `50%`,
+            '-webkit-transform-origin-z': `0px`,
+          });
+          //$('#abMoon').style.webkitTransformOrigin = `${cente.x}px ${center.y}px 0px`
+          var cont = Snap('#container');
+          Snap.animate(0, 2*Math.PI, (value)=>{
+            //Snap(obj).transform().totalMatrix.rotate(value, center.x, center.y);
+            Snap(obj).attr({transform: `matrix(${Math.cos(value)}, ${-Math.sin(value)}, ${Math.sin(value)}, ${Math.cos(value)}, 0, 0)`})
           }, duration, mina)
         }
       });
