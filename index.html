@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  </head>
+  <body>
+    <div id="container"></div>
+    <script src="js/jquery.js"></script>
+    <script src="js/snap.svg.js"></script>
+    <script>
+      $(document).ready(function(){
+        $('html').css('height', '100%');
+        $('body').css('background', 'linear-gradient(#3F51B5, #00BCD4)')
+        .css('width', '100%')
+        .css('height', '100%')
+        .css('margin', '0')
+        .css('padding', '0')
+        .css('background-repeat', 'no-repeat')
+        .css('background-position', 'center')
+        .css('background-size', 'cover');
+        var width = window.innerWidth;
+        var height = window.innerHeight;
+        $('#container')
+        .css('width', '100%')
+        .css('height', '100%')
+        .css('overflow', 'hidden');
+        var snap = Snap('#container')
+        Snap.load("Moon.svg", (data)=>{
+          snap.append(data);
+          rotateObject('#abMoon', 5000, mina.easeinout);
+        });
+
+        function rotateObject( obj, duration, mina){
+            var rect = $(obj)[0].getBoundingClientRect();
+            center ={
+              x: (rect.x + rect.width/2),
+              y: (rect.y + rect.height/2)
+            }
+
+
+          console.log('here');
+          Snap.animate(0, 360, (value)=>{
+            console.log(value);
+            // console.log('cos: '+Math.cos(value));
+            // console.log('sin: '+Math.sin(value));
+            // console.log(center.x);
+            // console.log(center.y);
+            console.log(Snap(obj));
+            Snap(obj).matrix.rotate(value, center.x, center.y);
+            //Snap(obj).attr({transform: `matrix(${Math.cos(value)}, ${-Math.sin(value)}, ${Math.sin(value)}, ${Math.cos(value)}, ${center.x}, ${center.y})`})
+          }, duration, mina)
+        }
+      });
+    </script>
+  </body>
+</html>
