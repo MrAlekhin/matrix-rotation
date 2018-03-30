@@ -4,14 +4,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   </head>
   <style>
-    *{
-      transform-origin: 50% 50% 0px !important;
-      transform-box: border-box;
-    }
-    #abMoon{
-      transform-origin: 50% 50% 0px !important;
-      transform-box: border-box;
-    }
+
   </style>
   <body>
     <div id="container"></div>
@@ -19,46 +12,25 @@
     <script src="js/snap.svg.js"></script>
     <script>
       $(document).ready(function(){
-        $('html').css('height', '100%');
-        $('body').css('background', 'linear-gradient(#3F51B5, #00BCD4)')
-        .css('width', '100%')
-        .css('height', '100%')
-        .css('margin', '0')
-        .css('padding', '0')
-        .css('background-repeat', 'no-repeat')
-        .css('background-position', 'center')
-        .css('background-size', 'cover');
+
         var width = window.innerWidth;
         var height = window.innerHeight;
-        $('#container')
-        .css('width', '100%')
-        .css('height', '100%')
-        .css('overflow', 'hidden');
-        $('svg').css({height: '100%', width: '100%'})
+
         var snap = Snap('#container')
         Snap.load("Moon.svg", (data)=>{
           snap.append(data);
+          $('#abMoon').click(()=>{
+            rotateObject('#abMoon', 5000, mina.easeinout);
+          });
           rotateObject('#abMoon', 5000, mina.easeinout);
+
         });
 
-        function rotateObject( obj, duration, mina){
-            var rect = $(obj)[0].getBoundingClientRect();
-            center ={
-              x: (rect.left + (rect.width/2)),
-              y: (rect.top + (rect.height/2))
-            }
-            console.log(center);
 
-          $(obj).css({
-            '-webkit-transform-origin-x': `50%`,
-            '-webkit-transform-origin-y': `50%`,
-            '-webkit-transform-origin-z': `0px`,
-          });
-          //$('#abMoon').style.webkitTransformOrigin = `${cente.x}px ${center.y}px 0px`
-          var cont = Snap('#container');
-          Snap.animate(0, 2*Math.PI, (value)=>{
-            //Snap(obj).transform().totalMatrix.rotate(value, center.x, center.y);
-            Snap(obj).attr({transform: `matrix(${Math.cos(value)}, ${-Math.sin(value)}, ${Math.sin(value)}, ${Math.cos(value)}, 0, 0)`})
+        function rotateObject( obj, duration, mina){
+          $(obj).css({'transform-origin': '50% 50% 0px'});
+          Snap.animate(0, 360, (value)=>{
+            $(obj).css('transform', `rotate(${value}deg)`)
           }, duration, mina)
         }
       });
